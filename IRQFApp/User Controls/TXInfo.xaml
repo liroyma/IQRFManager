@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="WpfApplication2.User_Controls.TXInfo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApplication2.User_Controls"
+             xmlns:images ="clr-namespace:WpfApplication2.Properties"
+             mc:Ignorable="d" Background="White" Padding="10">
+    <UserControl.Resources>
+        <local:YesNoBoolConverter x:Key="yesnoBoolConverter"></local:YesNoBoolConverter>
+    </UserControl.Resources>
+    <GroupBox Padding="10">
+        <GroupBox.Header>
+            <TextBlock Height="17">TR Model</TextBlock>
+        </GroupBox.Header>
+        <Grid  Height="125" Width="650">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <GroupBox Grid.Column="0">
+                <Grid>
+                    <Image Source="pack://application:,,/Resources/noimage.png" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ></Image>
+                </Grid>
+            </GroupBox>
+            <GroupBox Grid.Column="1">
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock VerticalAlignment="Center" Margin="0,2" Grid.Row="0" Grid.Column="0">Module Type:</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="0,2" Grid.Row="0" Grid.Column="1" Text="{Binding ModuleType}"></TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="0,2" Grid.Row="1" Grid.Column="0" >FCC ID:</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="0,2" Grid.Row="1" Grid.Column="1" Text="{Binding FCCID}"></TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="0,2" Grid.Row="2" Grid.Column="0">MCU type:</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="0,2" Grid.Row="2" Grid.Column="1" Text="{Binding MCUtype}"></TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="0,2" Grid.Row="3" Grid.Column="0" >MID:</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="0,2" Grid.Row="3" Grid.Column="1" Text="{Binding ModuleID}"></TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="0,2" Grid.Row="4" Grid.Column="0">OS version:</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="0,2" Grid.Row="4" Grid.Column="1" Text="{Binding OSversion}"></TextBlock>
+                </Grid>
+            </GroupBox>
+            <GroupBox Grid.Column="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock VerticalAlignment="Center" Margin="0,2" Grid.Row="0" Grid.Column="0">Rssi:</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="0,2" Grid.Row="0" Grid.Column="1" Text="{Binding Rssi}"></TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="0,2" Grid.Row="1" Grid.Column="0">Supply Voltage:</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="0,2" Grid.Row="1" Grid.Column="1" Text="{Binding SupplyVoltage}"></TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="0,2" Grid.Row="2" Grid.Column="0">SPI:</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="0,2" Grid.Row="2" Grid.Column="1" Text="{Binding SPI, Converter={StaticResource yesnoBoolConverter}}"></TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="0,2" Grid.Row="3" Grid.Column="0">UART:</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="0,2" Grid.Row="3" Grid.Column="1" Text="{Binding UART, Converter={StaticResource yesnoBoolConverter}}"></TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="0,2" Grid.Row="4" Grid.Column="0">insufficient OsBuild:</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="0,2" Grid.Row="4" Grid.Column="1" Text="{Binding insufficientOsBuild, Converter={StaticResource yesnoBoolConverter}}"></TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="0,2" Grid.Row="5" Grid.Column="0">Custom DPA Handler:</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="0,2" Grid.Row="5" Grid.Column="1" Text="{Binding CustomDPAHandler, Converter={StaticResource yesnoBoolConverter}}"></TextBlock>
+                </Grid>
+            </GroupBox>
+        </Grid>
+    </GroupBox>
+</UserControl>

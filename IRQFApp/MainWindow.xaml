@@ -1,0 +1,328 @@
+﻿<Window xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Layout.Toolkit"  
+        xmlns:WpfApplication2="clr-namespace:WpfApplication2"  x:Class="WpfApplication2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:tools="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="MainWindow" Height="850" Width="857">
+    <Window.Resources>
+        <WpfApplication2:BooleanAndConverter x:Key="booleanAndConverter"></WpfApplication2:BooleanAndConverter>
+        <Style TargetType="Button" x:Key="CommandButtonStyle">
+            <Setter Property="Height" Value="80"></Setter>
+            <Setter Property="Width" Value="80"></Setter>
+            <Setter Property="Margin" Value="5"></Setter>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="TextBlockButtonStyle">
+            <Setter Property="TextWrapping" Value="WrapWithOverflow"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            <Setter Property="TextAlignment" Value="Center"></Setter>
+        </Style>
+        <Style TargetType="Controls:AccordionItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        </Style>
+    </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="Enter" Command="{Binding SendCommand}" CommandParameter="{Binding Text,ElementName=sentcommand}"/>
+    </Window.InputBindings>
+    <DockPanel LastChildFill="True">
+        <Menu IsEnabled="{Binding EnableWindow}" DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="{Binding ButtonText}" Command="{Binding ConnectCommand}" IsEnabled="{Binding FoundPorts}"></MenuItem>
+                <MenuItem Header="Exit" Command="{Binding ExitCommand}"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="USB" IsEnabled="{Binding IsConnected}">
+                <MenuItem Header="Get USB Device Info" Command="{Binding SendCommand}" CommandParameter="I"></MenuItem>
+                <MenuItem Header="Reset USB Device" Command="{Binding SendCommand}" CommandParameter=">R"></MenuItem>
+                <MenuItem Header="Connectivity Indication" Command="{Binding SendCommand}" CommandParameter=">B"></MenuItem>
+                <MenuItem Header="Get Status" Command="{Binding SendCommand}" CommandParameter=">S"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="IQRF Module" IsEnabled="{Binding IsConnected}">
+                <MenuItem Header="Get TR Module Info" Command="{Binding SendCommand}" CommandParameter=">IT"></MenuItem>
+                <MenuItem Header="Reset TR Module" Command="{Binding SendCommand}" CommandParameter=">RT"></MenuItem>
+            </MenuItem>
+        </Menu>
+        <DataGrid DockPanel.Dock="Bottom" ItemsSource="{Binding Messages}" Height="150" SelectionMode="Single"  GridLinesVisibility="Vertical" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Time" Width="80" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Time, StringFormat=HH:mm:ss.fff}" TextAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="DPA" Width="80" IsReadOnly="True" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding MessageDPA}" TextAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Header" Width="50" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock TextAlignment="Center" Text="{Binding MessageHeader}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Length" Width="50" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding DataLength}" TextAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Data Decimal" Width="200" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Margin="10,0,0,0" Text="{Binding DataDec}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Data Hex" Width="200" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Margin="10,0,0,0" Text="{Binding DataHex}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Comment" Width="200" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Margin="10,0,0,0" Text="{Binding Commant}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Foreground" Value="{Binding MessageColor}"/>
+                </Style>
+            </DataGrid.RowStyle>
+        </DataGrid>
+        <Grid IsEnabled="{Binding EnableWindow}" DockPanel.Dock="Top" Background="LightBlue">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="250"/>
+            </Grid.ColumnDefinitions>
+            <WrapPanel Grid.Column="1" Margin="10">
+                <ComboBox Margin="10,0" ItemsSource="{Binding Ports}" SelectedItem="{Binding SelectedPort}" Width="100"/>
+                <Button Margin="10,0" Content="{Binding ButtonText}" Command="{Binding ConnectCommand}" IsEnabled="{Binding FoundPorts}"></Button>
+            </WrapPanel>
+        </Grid>
+        <Grid DockPanel.Dock="Left" Width="120" Name="StackPanel1">
+            <Grid.IsEnabled>
+                <MultiBinding Converter="{StaticResource booleanAndConverter}">
+                    <Binding Path="EnableWindow" />
+                    <Binding Path="IsConnected"  />
+                </MultiBinding>
+            </Grid.IsEnabled>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Name="GridRow1">
+                    <RowDefinition.Style>
+                        <Style TargetType="{x:Type RowDefinition}">
+                            <Setter Property="Height" Value="*" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=expanderOne, Path=IsExpanded}" Value="False">
+                                    <Setter Property="Height" Value="Auto" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </RowDefinition.Style>
+                </RowDefinition>
+                <RowDefinition Name="GridRow2">
+                    <RowDefinition.Style>
+                        <Style TargetType="{x:Type RowDefinition}">
+                            <Setter Property="Height" Value="*" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=expandertwo, Path=IsExpanded}" Value="False">
+                                    <Setter Property="Height" Value="Auto" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </RowDefinition.Style>
+                </RowDefinition>
+                <RowDefinition Name="GridRow3">
+                    <RowDefinition.Style>
+                        <Style TargetType="{x:Type RowDefinition}">
+                            <Setter Property="Height" Value="*" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=expanderthree, Path=IsExpanded}" Value="False">
+                                    <Setter Property="Height" Value="Auto" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </RowDefinition.Style>
+                </RowDefinition>
+                <RowDefinition Name="GridRow4">
+                    <RowDefinition.Style>
+                        <Style TargetType="{x:Type RowDefinition}">
+                            <Setter Property="Height" Value="*" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=expanderfour, Path=IsExpanded}" Value="False">
+                                    <Setter Property="Height" Value="Auto" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </RowDefinition.Style>
+                </RowDefinition>
+                <RowDefinition Name="GridRow5">
+                    <RowDefinition.Style>
+                        <Style TargetType="{x:Type RowDefinition}">
+                            <Setter Property="Height" Value="*" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=expanderfive, Path=IsExpanded}" Value="False">
+                                    <Setter Property="Height" Value="Auto" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </RowDefinition.Style>
+                </RowDefinition>
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0" Header="Node Selection" Padding="10">
+                <StackPanel>
+                    <CheckBox Margin="0,10,0,0" Content="BroadCast" IsChecked="{Binding IsBroadCast}" Height="20" />
+                </StackPanel>
+            </GroupBox>
+            <Expander x:Name="expanderOne" Grid.Row="1" Expanded="Expander_Expanded" Background="LightGray" IsEnabled="{Binding NodeNumberEnable}">
+                <Expander.Header>
+                    <TextBlock FontWeight="Bold" >Mesh</TextBlock>
+                </Expander.Header>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Background="LightBlue">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                        <Button Style="{StaticResource CommandButtonStyle}" Uid="Bond new Node" Command="{Binding SendCommand}" CommandParameter="{Binding Uid, RelativeSource={RelativeSource Self}}">
+                            <TextBlock Style="{StaticResource TextBlockButtonStyle}" Uid="Bond new Node" >
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat=" {0}">
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Uid" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Button>
+                        <Button Style="{StaticResource CommandButtonStyle}" Uid="Discovery" Command="{Binding SendCommand}" CommandParameter="{Binding Uid, RelativeSource={RelativeSource Self}}">
+                            <TextBlock Style="{StaticResource TextBlockButtonStyle}" Uid="Discovery" >
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat=" {0}">
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Uid" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Button>
+                        <Button  Visibility="{Binding NodeNumberVisibility}" Style="{StaticResource CommandButtonStyle}" Uid="Remove Bond" Command="{Binding SendCommand}" CommandParameter="{Binding Uid, RelativeSource={RelativeSource Self}}">
+                            <TextBlock Style="{StaticResource TextBlockButtonStyle}" Uid="Remove Bond" >
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat=" {0} {1} ">
+                                        <Binding Path="TextOnButton" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Uid" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Button>
+                        <Button Style="{StaticResource CommandButtonStyle}" Uid="FullInfo" Command="{Binding SendCommand}" CommandParameter="{Binding Uid, RelativeSource={RelativeSource Self}}">
+                            <TextBlock Style="{StaticResource TextBlockButtonStyle}" Uid="FullInfo" >
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat=" {0} {1} ">
+                                        <Binding Path="TextOnButton" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Uid" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </Expander>
+            <Expander x:Name="expandertwo" Grid.Row="2" Expanded="Expander_Expanded" Background="LightGray" >
+                <Expander.Header>
+                    <TextBlock FontWeight="Bold" >Leds</TextBlock>
+                </Expander.Header>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Background="LightBlue">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                        <Button Style="{StaticResource CommandButtonStyle}" Uid="Red LED On" Command="{Binding SendCommand}" CommandParameter="{Binding Uid, RelativeSource={RelativeSource Self}}">
+                            <TextBlock Style="{StaticResource TextBlockButtonStyle}" Uid="Red LED On" >
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat=" {0} {1} ">
+                                        <Binding Path="TextOnButton" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Uid" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Button>
+                        <Button Style="{StaticResource CommandButtonStyle}" Uid="Red LED Off" Command="{Binding SendCommand}" CommandParameter="{Binding Uid, RelativeSource={RelativeSource Self}}">
+                            <TextBlock Style="{StaticResource TextBlockButtonStyle}" Uid="Red LED Off" >
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat=" {0} {1} ">
+                                        <Binding Path="TextOnButton" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Uid" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Button>
+                        <Button Style="{StaticResource CommandButtonStyle}" Uid="Red LED Status" Command="{Binding SendCommand}" CommandParameter="{Binding Uid, RelativeSource={RelativeSource Self}}">
+                            <TextBlock Style="{StaticResource TextBlockButtonStyle}" Uid="Red LED Status" >
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat=" {0} {1} ">
+                                        <Binding Path="TextOnButton" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Uid" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Button>
+                        <Button Style="{StaticResource CommandButtonStyle}" Uid="Get Temp" Command="{Binding SendCommand}" CommandParameter="{Binding Uid, RelativeSource={RelativeSource Self}}">
+                            <TextBlock Style="{StaticResource TextBlockButtonStyle}" Uid="Get Temp" >
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat=" {0} {1} ">
+                                        <Binding Path="TextOnButton" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Uid" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Button>
+                        <Button Style="{StaticResource CommandButtonStyle}" Uid="Get Network" Command="{Binding SendCommand}" CommandParameter="{Binding Uid, RelativeSource={RelativeSource Self}}">
+                            <TextBlock Style="{StaticResource TextBlockButtonStyle}" Uid="Get Network" >
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat=" {0} {1} ">
+                                        <Binding Path="TextOnButton" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Uid" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </Expander>
+            <Expander x:Name="expanderthree" Grid.Row="3" Expanded="Expander_Expanded" Background="LightGray">
+                <Expander.Header>
+                    <TextBlock FontWeight="Bold" >Custom</TextBlock>
+                </Expander.Header>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Background="LightBlue">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                        <Button Style="{StaticResource CommandButtonStyle}" Uid="Leds Flick" Command="{Binding SendCommand}" CommandParameter="{Binding Uid, RelativeSource={RelativeSource Self}}">
+                            <TextBlock Style="{StaticResource TextBlockButtonStyle}" Uid="Leds Flick" >
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat=" {0} {1} ">
+                                        <Binding Path="TextOnButton" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Uid" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </Expander>
+            <Expander Visibility="Collapsed" x:Name="expanderfour" Grid.Row="3" Expanded="Expander_Expanded" Background="LightGray">
+                <Expander.Header>
+                    <TextBlock FontWeight="Bold" >Other</TextBlock>
+                </Expander.Header>
+            </Expander>
+            <Expander Visibility="Collapsed" x:Name="expanderfive" Grid.Row="3" Expanded="Expander_Expanded" Background="LightGray">
+                <Expander.Header>
+                    <TextBlock FontWeight="Bold" >Other</TextBlock>
+                </Expander.Header>
+            </Expander>
+        </Grid>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Auto" DockPanel.Dock="Left">
+            <StackPanel Name="Container">
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</Window>
