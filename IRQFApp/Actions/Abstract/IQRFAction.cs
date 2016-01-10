@@ -334,7 +334,7 @@ namespace WpfApplication2
         #region Handle Thermometer
         private UserControl HandleThermometer(List<byte> data, byte pcmd)
         {
-            return null;
+            return new TemperatureInfo(data);
         }
         #endregion
 
