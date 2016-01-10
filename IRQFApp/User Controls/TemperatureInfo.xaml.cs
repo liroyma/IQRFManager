@@ -29,7 +29,7 @@ namespace WpfApplication2.User_Controls
             this.DataContext = this;
             tmpCel = data[0];
             tmpFah = (byte)((tmpCel * 9) / 5);
-            tmpFah += 32;
+            //tmpFah += 32;
         }
     }
 }
