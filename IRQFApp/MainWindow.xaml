@@ -182,6 +182,7 @@
             </Grid.RowDefinitions>
             <GroupBox Grid.Row="0" Header="Node Selection" Padding="10">
                 <StackPanel>
+                    <TextBox Margin="0,10,0,0" Text="{Binding NodeNumber}" />
                     <CheckBox Margin="0,10,0,0" Content="BroadCast" IsChecked="{Binding IsBroadCast}" Height="20" />
                 </StackPanel>
             </GroupBox>

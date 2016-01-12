@@ -142,6 +142,9 @@
     <Compile Include="User Controls\TemperatureInfo.xaml.cs">
       <DependentUpon>TemperatureInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="User Controls\RedLedView.xaml.cs">
+      <DependentUpon>RedLedView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -179,6 +182,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="User Controls\RedLedView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Messages\ReciveMessage.cs" />
@@ -211,6 +218,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\noimage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\greedled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ledoff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\redled.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

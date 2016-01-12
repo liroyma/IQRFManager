@@ -20,16 +20,25 @@ namespace WpfApplication2.User_Controls
     /// </summary>
     public partial class TemperatureInfo : UserControl
     {
-        public byte tmpCel { get; private set; }
+
         public byte tmpFah { get; private set; }
+
+        public byte tmpc;
+        public byte tmpCel
+        {
+            get { return tmpc; }
+            private set
+            {
+                tmpc = value;
+                tmpFah = (byte)(((value * 9) / 5) + 32);
+            }
+        }
 
         public TemperatureInfo(List<byte> data)
         {
             InitializeComponent();
             this.DataContext = this;
             tmpCel = data[0];
-            tmpFah = (byte)((tmpCel * 9) / 5);
-            //tmpFah += 32;
         }
     }
 }

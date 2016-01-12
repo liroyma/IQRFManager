@@ -362,7 +362,7 @@ namespace WpfApplication2
         #region Handle LEDR
         private UserControl HandleLEDR(List<byte> data, byte pcmd)
         {
-            return null;
+            return new RedLedView(data, pcmd);
         }
         #endregion
 
