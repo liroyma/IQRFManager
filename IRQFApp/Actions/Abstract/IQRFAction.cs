@@ -19,6 +19,8 @@ namespace WpfApplication2
         public bool DontWaitForMore { get; set; }
         public bool DontADDElement { get; set; }
 
+        private UserPeripheralsView userPeripheralsView;
+
         DispatcherTimer Timer = new DispatcherTimer();
 
         public event EventHandler CanSendNext;
@@ -95,7 +97,7 @@ namespace WpfApplication2
                 case 14:
                     usercontrol = HandleFRC(list, pcmd);
                     break;
-                case 20:
+                case 32:
                     usercontrol = HandleUSER(list, pcmd);
                     break;
             }
@@ -111,7 +113,21 @@ namespace WpfApplication2
                 }
             }
             else
-                ContainerPanel.Children.Add(usercontrol);
+            {
+                bool exists = false;
+                foreach (var item in ContainerPanel.Children)
+                {
+                    if (item is UserPeripheralsView)
+                    {
+                        exists = true;
+                    }
+                }
+
+                if (!exists)
+                {
+                    ContainerPanel.Children.Add(usercontrol);
+                }
+            }
             SendNext();
 
         }
@@ -306,7 +322,11 @@ namespace WpfApplication2
         #region Handle USER
         private UIElement HandleUSER(List<byte> data, byte pcmd)
         {
-            return null;
+            if (userPeripheralsView == null) { 
+                userPeripheralsView = new UserPeripheralsView(pcmd);
+            }
+            userPeripheralsView.updateView(pcmd);
+            return userPeripheralsView;
         }
         #endregion
 

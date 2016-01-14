@@ -145,6 +145,9 @@
     <Compile Include="User Controls\RedLedView.xaml.cs">
       <DependentUpon>RedLedView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="User Controls\UserPeripheralsView.xaml.cs">
+      <DependentUpon>UserPeripheralsView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -183,6 +186,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="User Controls\RedLedView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="User Controls\UserPeripheralsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
