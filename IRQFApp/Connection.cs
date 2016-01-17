@@ -127,6 +127,50 @@ namespace WpfApplication2
             }
         }
 
+        private string labeltext;
+        public string LabelText
+        {
+            get { return labeltext; }
+            set
+            {
+                labeltext = value;
+                NotifyPropertyChanged("LabelText");
+            }
+        }
+
+        private string labelbackground;
+        public string LabelBackground
+        {
+            get { return labelbackground; }
+            set
+            {
+                labelbackground = value;
+                NotifyPropertyChanged("LabelBackground");
+            }
+        }
+
+        private string labelforeground;
+        public string LabelForeground
+        {
+            get { return labelforeground; }
+            set
+            {
+                labelforeground = value;
+                NotifyPropertyChanged("LabelForeground");
+            }
+        }
+
+        private string labelborder;
+        public string LabelBorder
+        {
+            get { return labelborder; }
+            set
+            {
+                labelborder = value;
+                NotifyPropertyChanged("LabelBorder");
+            }
+        }
+
 
         private bool foundports;
         public bool FoundPorts
@@ -150,7 +194,11 @@ namespace WpfApplication2
             set
             {
                 isconnected = value;
-                ButtonText = isconnected? "DisConnect" : "Connect";
+                ButtonText = isconnected ? "DisConnect" : "Connect";
+                LabelText = isconnected ? "Connected" : "Disconnected";
+                LabelBackground = isconnected ? "YellowGreen" : "Salmon";
+                LabelBorder = isconnected ? "ForestGreen" : "Crimson";
+                LabelForeground = isconnected ? "Green" : "DarkRed";
                 NotifyPropertyChanged("IsConnected");
             }
         }
