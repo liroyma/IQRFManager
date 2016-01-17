@@ -19,7 +19,7 @@ namespace WpfApplication2
         public bool DontWaitForMore { get; set; }
         public bool DontADDElement { get; set; }
 
-        private UserPeripheralsView userPeripheralsView;
+        private static LedsView ledsView;
 
         DispatcherTimer Timer = new DispatcherTimer();
 
@@ -74,10 +74,10 @@ namespace WpfApplication2
                     usercontrol = HandleRAM(list, pcmd);
                     break;
                 case 06:
-                    usercontrol = HandleLEDR(list, pcmd);
+                    usercontrol = HandleLEDR(list, pcmd, message.PNUM);
                     break;
                 case 07:
-                    usercontrol = HandleLEDG(list, pcmd);
+                    usercontrol = HandleLEDG(list, pcmd, message.PNUM);
                     break;
                 case 08:
                     usercontrol = HandleSPI(list, pcmd);
@@ -98,7 +98,7 @@ namespace WpfApplication2
                     usercontrol = HandleFRC(list, pcmd);
                     break;
                 case 32:
-                    usercontrol = HandleUSER(list, pcmd);
+                    usercontrol = HandleUSER(list, pcmd, message.PNUM);
                     break;
             }
             if (usercontrol == null)
@@ -117,7 +117,7 @@ namespace WpfApplication2
                 bool exists = false;
                 foreach (var item in ContainerPanel.Children)
                 {
-                    if (item is UserPeripheralsView)
+                    if (item is LedsView)
                     {
                         exists = true;
                     }
@@ -320,13 +320,13 @@ namespace WpfApplication2
         #endregion
 
         #region Handle USER
-        private UIElement HandleUSER(List<byte> data, byte pcmd)
+        private UIElement HandleUSER(List<byte> data, byte pcmd, byte pnum)
         {
-            if (userPeripheralsView == null) { 
-                userPeripheralsView = new UserPeripheralsView(pcmd);
+            if (ledsView == null) {
+                ledsView = new LedsView();
             }
-            userPeripheralsView.updateView(pcmd);
-            return userPeripheralsView;
+            ledsView.updateView(data, pcmd, pnum);
+            return ledsView;
         }
         #endregion
 
@@ -373,16 +373,26 @@ namespace WpfApplication2
         #endregion
 
         #region Handle LEDG
-        private UserControl HandleLEDG(List<byte> data, byte pcmd)
+        private UserControl HandleLEDG(List<byte> data, byte pcmd, byte pnum)
         {
-            return null;
+            if (ledsView == null)
+            {
+                ledsView = new LedsView();
+            }
+            ledsView.updateView(data, pcmd, pnum);
+            return ledsView;
         }
         #endregion
 
         #region Handle LEDR
-        private UserControl HandleLEDR(List<byte> data, byte pcmd)
+        private UserControl HandleLEDR(List<byte> data, byte pcmd, byte pnum)
         {
-            return new RedLedView(data, pcmd);
+            if (ledsView == null)
+            {
+                ledsView = new LedsView();
+            }
+            ledsView.updateView(data, pcmd, pnum);
+            return ledsView;
         }
         #endregion
 

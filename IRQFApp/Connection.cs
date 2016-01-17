@@ -353,7 +353,7 @@ namespace WpfApplication2
                 else
                 {
                     LookForAvilablePorts();
-                    SelectedPort = null;
+                    //SelectedPort = null;
                     comPort.Close();
                     IsConnected = comPort.IsOpen;
                 }
@@ -464,6 +464,15 @@ namespace WpfApplication2
                     break;
                 case "Red LED Status":
                     action = new RedLed(NodeNumber, 2);
+                    break;
+                case "Green LED On":
+                    action = new GreenLed(NodeNumber, 1);
+                    break;
+                case "Green LED Off":
+                    action = new GreenLed(NodeNumber, 0);
+                    break;
+                case "Green LED Status":
+                    action = new GreenLed(NodeNumber, 2);
                     break;
                 case "Remove Bond":
                     action = new RemoveNode(NodeNumber);

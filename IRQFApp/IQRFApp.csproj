@@ -142,11 +142,8 @@
     <Compile Include="User Controls\TemperatureInfo.xaml.cs">
       <DependentUpon>TemperatureInfo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="User Controls\RedLedView.xaml.cs">
-      <DependentUpon>RedLedView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="User Controls\UserPeripheralsView.xaml.cs">
-      <DependentUpon>UserPeripheralsView.xaml</DependentUpon>
+    <Compile Include="User Controls\LedsView.xaml.cs">
+      <DependentUpon>LedsView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -185,11 +182,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="User Controls\RedLedView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="User Controls\UserPeripheralsView.xaml">
+    <Page Include="User Controls\LedsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

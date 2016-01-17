@@ -19,7 +19,7 @@ namespace WpfApplication2.User_Controls
     /// <summary>
     /// Interaction logic for UserPeripheralsView.xaml
     /// </summary>
-    public partial class UserPeripheralsView : UserControl, INotifyPropertyChanged
+    public partial class LedsView : UserControl, INotifyPropertyChanged
     {
         private GradientStopCollection red_col;
         private GradientStopCollection green_col;
@@ -73,7 +73,7 @@ namespace WpfApplication2.User_Controls
         }
 
 
-        public UserPeripheralsView(byte pcmd)
+        public LedsView()
         {
             InitializeComponent();
             this.DataContext = this;
@@ -92,27 +92,67 @@ namespace WpfApplication2.User_Controls
             white_col.Add(new GradientStop(Color.FromRgb(255, 255, 255), 0.0));
             white_col.Add(new GradientStop(Color.FromRgb(228, 228, 228), 1.0));
             White = new LinearGradientBrush(white_col);
+
             GreenLedColor = White;
-            RedLedColor = White;
+            RedLedColor   = White;
             GreenLedState = "OFF";
-            RedLedState = "OFF";
+            RedLedState   = "OFF";
         }
 
-        public void updateView(byte pcmd)
+        public void updateView(List<byte> data, byte pcmd, byte pnum)
         {
-            switch (pcmd)
+            switch (pnum)
             {
-                case 0:
-                    GreenLedColor = Green;
-                    RedLedColor = White;
-                    GreenLedState = "ON";
-                    RedLedState = "OFF";
+                case 6: // Red Led
+                    switch (pcmd)
+                    {
+                        case 0:
+                            RedLedState = "OFF";
+                            RedLedColor = White;
+                            break;
+                        case 1:
+                            RedLedState = "ON";
+                            RedLedColor = Red;
+                            break;
+                        case 2:
+                            RedLedState = (data[0] > 0 ? "ON" : "OFF");
+                            RedLedColor = (data[0] > 0 ? Red  : White);
+                            break;
+                    }
                     break;
-                case 1:
-                    GreenLedColor = White;
-                    RedLedColor = Red;
-                    GreenLedState = "OFF";
-                    RedLedState = "ON";
+                case 7: // Green Led
+                    switch (pcmd)
+                    {
+                        case 0:
+                            GreenLedState = "OFF";
+                            GreenLedColor = White;
+                            break;
+                        case 1:
+                            GreenLedState = "ON";
+                            GreenLedColor = Green;
+                            break;
+                        case 2:
+                            GreenLedState = (data[0] > 0 ? "ON"  : "OFF");
+                            GreenLedColor = (data[0] > 0 ? Green : White);
+                            break;
+                    }
+                    break;
+                case 32: // User Peripherals
+                    switch (pcmd)
+                    {
+                        case 0:
+                            GreenLedColor = Green;
+                            RedLedColor = White;
+                            GreenLedState = "ON";
+                            RedLedState = "OFF";
+                            break;
+                        case 1:
+                            GreenLedColor = White;
+                            RedLedColor = Red;
+                            GreenLedState = "OFF";
+                            RedLedState = "ON";
+                            break;
+                    }
                     break;
             }
 

@@ -275,6 +275,38 @@
                                 </TextBlock.Text>
                             </TextBlock>
                         </Button>
+
+                        <Button Style="{StaticResource CommandButtonStyle}" Uid="Green LED On" Command="{Binding SendCommand}" CommandParameter="{Binding Uid, RelativeSource={RelativeSource Self}}">
+                            <TextBlock Style="{StaticResource TextBlockButtonStyle}" Uid="Green LED On" >
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat=" {0} {1} ">
+                                        <Binding Path="TextOnButton" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Uid" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Button>
+                        <Button Style="{StaticResource CommandButtonStyle}" Uid="Green LED Off" Command="{Binding SendCommand}" CommandParameter="{Binding Uid, RelativeSource={RelativeSource Self}}">
+                            <TextBlock Style="{StaticResource TextBlockButtonStyle}" Uid="Green LED Off" >
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat=" {0} {1} ">
+                                        <Binding Path="TextOnButton" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Uid" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Button>
+                        <Button Style="{StaticResource CommandButtonStyle}" Uid="Green LED Status" Command="{Binding SendCommand}" CommandParameter="{Binding Uid, RelativeSource={RelativeSource Self}}">
+                            <TextBlock Style="{StaticResource TextBlockButtonStyle}" Uid="Green LED Status" >
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat=" {0} {1} ">
+                                        <Binding Path="TextOnButton" />
+                                        <Binding RelativeSource="{RelativeSource Self}" Path="Uid" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Button>
+
                         <Button Style="{StaticResource CommandButtonStyle}" Uid="Get Temp" Command="{Binding SendCommand}" CommandParameter="{Binding Uid, RelativeSource={RelativeSource Self}}">
                             <TextBlock Style="{StaticResource TextBlockButtonStyle}" Uid="Get Temp" >
                                 <TextBlock.Text>
