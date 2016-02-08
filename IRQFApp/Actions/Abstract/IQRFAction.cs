@@ -20,6 +20,7 @@ namespace WpfApplication2
         public bool DontADDElement { get; set; }
 
         private static LedsView ledsView;
+        private static Rs232View rs232View;
 
         DispatcherTimer Timer = new DispatcherTimer();
 
@@ -88,13 +89,13 @@ namespace WpfApplication2
                 case 10:
                     usercontrol = HandleThermometer(list, pcmd);
                     break;
-                case 12:
+                case 11:
                     usercontrol = HandlePWM(list, pcmd);
                     break;
-                case 13:
-                    usercontrol = HandleUART(list, pcmd);
+                case 12:
+                    usercontrol = HandleUART(list, pcmd, this);
                     break;
-                case 14:
+                case 13:
                     usercontrol = HandleFRC(list, pcmd);
                     break;
                 case 32:
@@ -117,7 +118,7 @@ namespace WpfApplication2
                 bool exists = false;
                 foreach (var item in ContainerPanel.Children)
                 {
-                    if (item is LedsView)
+                    if (item is LedsView || item is Rs232View)
                     {
                         exists = true;
                     }
@@ -338,9 +339,13 @@ namespace WpfApplication2
         #endregion
 
         #region Handle UART
-        private UserControl HandleUART(List<byte> data, byte pcmd)
+        private UserControl HandleUART(List<byte> data, byte pcmd, IQRFAction uart)
         {
-            return null;
+            if (rs232View == null)
+            {
+                rs232View = new Rs232View(uart);
+            }
+            return rs232View;
         }
         #endregion
 

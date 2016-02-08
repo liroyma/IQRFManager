@@ -111,6 +111,7 @@
     <Compile Include="Actions\Discovery.cs" />
     <Compile Include="Actions\FlickerLeds.cs" />
     <Compile Include="Actions\GreenLed.cs" />
+    <Compile Include="Actions\UART.cs" />
     <Compile Include="Actions\NewNode.cs" />
     <Compile Include="Actions\NodeFullInfo.cs" />
     <Compile Include="Actions\RedLed.cs" />
@@ -135,6 +136,9 @@
     </Compile>
     <Compile Include="User Controls\NewNodeView.xaml.cs">
       <DependentUpon>NewNodeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Rs232View.xaml.cs">
+      <DependentUpon>Rs232View.xaml</DependentUpon>
     </Compile>
     <Compile Include="User Controls\TXInfo.xaml.cs">
       <DependentUpon>TXInfo.xaml</DependentUpon>
@@ -171,6 +175,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="User Controls\NewNodeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="User Controls\Rs232View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
